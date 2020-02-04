@@ -17,8 +17,8 @@
     <div class="sider">
         <a href="#" class="logo"><img src="images/logo02.png" alt="logo"></a>
         <div class="user_info">
-            <img class="userImg" src="images/2.jpg" alt="person">
-            <span>欢迎&nbsp;&nbsp;<i id="userName">李思思</i></span>
+            <img src="images/2.jpg" alt="person">
+            <span>欢迎&nbsp;&nbsp;李思思</span>
             <b>管理员</b>
         </div>
         <div class="menu">
@@ -43,15 +43,16 @@
         </form>
         <div class="user_center_link">
             <a href="user.html" onclick="setMenu(3,0)" target="main_frame">个人中心</a>
-            <img class="userImg"  src="images/2.jpg" alt="person">
-            <!-- href="javascript:;" 不要让a标签跳转 -->
-            <a href="javascript:;" id="btnLogout"><i class="iconfont icon-tuichu"></i> 退出</a>
+            <img src="images/2.jpg" alt="person">
+            <a href="#"><i class="iconfont icon-tuichu"></i> 退出</a>
         </div>
     </div>
 
     <div class="main" id="main_body">
         <iframe src="main_count.html" frameborder="0" id="main_frame" name="main_frame" frameborder="0" scrolling="auto"></iframe>
     </div>
+
+
 
     <script>
         var $level01 = $('.level01');
@@ -101,40 +102,6 @@
            }
         }
 
-    </script>
-    <!-- 引入config.js模块 -->
-    <script src="./js/util/config.js"></script>
-    <!-- 引入user模块 -->
-    <script src="./js/util/user.js"></script>
-    
-
-    <script>
-        // 1. 用户退出
-        // 思路：
-        // 请求  退出接口
-        $('#btnLogout').click(function(){
-            // 用户退出
-            user.logout().then(function(res){
-                console.log(res);
-                if(res.code === 200){
-                    alert('成功退出')
-                    window.location.href = "./login.html"
-                } else {
-                    alert(res.msg)
-                }
-            })
-        })
-
-        // 2. 获取管理员信息并显示
-        user.getInfo().then(function(res){
-            console.log(res)
-            if(res.code === 200){
-                // 显示内容
-                $('#userName').text( res.data.nickname )
-                $('.userImg').attr('src',res.data.user_pic )
-            }
-        })
-        
     </script>
 
 </body>
