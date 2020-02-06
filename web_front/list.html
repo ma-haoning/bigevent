@@ -11,7 +11,12 @@
     <link rel="stylesheet" type="text/css" href="css/jquery.pagination.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript" src="js/jquery.pagination.min.js"></script>
+    <script type="text/javascript" src="js/jquery.pagination.min.js"></script>
+    <style>
+        #left_menu .cur {
+            background-color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,23 +36,14 @@
         <div class="menu">
             <div class="menu_collapse fl">
                 <a href="javascript:;" class="level_one"><i class="fa fa-list-ul"></i>全部分类</a>
-                <ul class="level_two">
+                <ul class="level_two" id="level_two">
                     <li class="up"></li>
-                    <li><a href="#">最 新</a></li>
-                    <li><a href="#">科 技</a></li>
-                    <li><a href="#">股 市</a></li>
-                    <li><a href="#">商 品</a></li>
-                    <li><a href="#">外 汇</a></li>
-                    <li><a href="#">公 司</a></li>
+
+
                 </ul>
             </div>
-            <ul class="left_menu fl">
-                <li><a href="#">最 新</a></li>
-                <li><a href="#">科 技</a></li>
-                <li><a href="#">股 市</a></li>
-                <li><a href="#">商 品</a></li>
-                <li><a href="#">外 汇</a></li>
-                <li><a href="#">公 司</a></li>
+            <ul class="left_menu fl" id="left_menu">
+
             </ul>
             <ul class="right_menu fr">
                 <li><a href="#">科技专题</a></li>
@@ -137,11 +133,11 @@
 
             <div id="pagination" class="page"></div>
             <script>
-                $(function() {
+                $(function () {
                     $("#pagination").pagination({
                         currentPage: 2,
-                        totalPage:8,
-                        callback: function(current) {
+                        totalPage: 8,
+                        callback: function (current) {
                             alert('ok!');
                         }
                     });
@@ -220,12 +216,55 @@
             <span>|</span>
             <a href="#">招聘人才</a>
             <span>|</span>
-            <a href="#">友情链接</a>		
+            <a href="#">友情链接</a>
         </div>
-        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司   All Rights Reserved</p>
-        <p>电话：0755-****888    粤ICP备*******8号</p>
+        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司 All Rights Reserved</p>
+        <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
 
 </body>
+
+<script src="./js/template-web.js"></script>
+<script src="./js/util/config.js"></script>
+<script src="./js/util/category.js"></script>
+
+<!-- 获取文章的类别并显示高亮的模板引擎 -->
+<script id="tem" type="text/html">
+    {{each data item}}
+    {{if item.id==curId}}
+    <li class="cur"><a href="./list.html?id={{item.id}}">{{item.name}}</a></li>
+    {{else}}
+    <li><a href="./list.html?id={{item.id}}">{{item.name}}</a></li>
+    {{/if}}
+    {{/each}}
+</script>
+
+
+
+<script>
+
+    //获取点击文章的类别所得到的id
+    // console.log(window.location.search);
+    var id = window.location.search.substr(4);
+
+
+    //获取文章的类别并显示高亮
+    category.get().then(function (res) {
+        console.log(res);
+        if (res.code == 200) {
+            //把在index.html上点击的id赋值给res.curId   curId是新定义（键）
+            res.curId = id;
+            var htmlStr = template("tem", res);
+            console.log(htmlStr);
+
+            $("#left_menu").html(htmlStr);
+            $("#level_two").append(htmlStr);
+        } else {
+            alert(res.msg)
+        }
+
+    })
+
+</script>
 
 </html>
