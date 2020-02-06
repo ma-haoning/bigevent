@@ -26,6 +26,11 @@ var article = {
         return $.get(APILIST.article_get, {
             perpage: 5
         })
+    },
+
+
+    getRank: function () {
+        return $.get(APILIST.rank_get)
     }
 
 }

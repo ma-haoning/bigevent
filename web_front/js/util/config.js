@@ -18,4 +18,7 @@ var APILIST = {
     // 获取文章
     article_get: BASEURL + '/admin/search',
 
+    //获取排行榜
+    rank_get: BASEURL + "/rank",
+
 }
