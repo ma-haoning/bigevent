@@ -45,27 +45,10 @@
 
     <div class="main_con clearfix">
         <div class="left_con">
-            <ul class="focus_list">
-                <li class="first">
-                    <a href="#"><img src="images/pic01.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic02.jpg" alt=""></a>
-                    <p>图片说明图片说明图片说明图片说明图片说明图片说明图片说明图片说明图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic03.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic05.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic06.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
+            <ul class="focus_list" id="focus">
+
+
+
             </ul>
 
             <div class="common_title">
@@ -215,12 +198,31 @@
 <script src="./js/jquery-1.12.4.min.js"></script>
 <script src="./js/template-web.js"></script>
 <script src="./js/util/config.js"></script>
+<script src="./js/util/article.js"></script>
 
-
+<!-- 获取文章类别的模板引擎 -->
 <script id="wenzhangFenlei" type="text/html">
     {{each data item}}
     <li><a href="#">{{item.name}}</a></li>
     {{/each}}
+</script>
+
+<!-- //获取焦点图的模板引擎 -->
+
+<script id="focusFive" type="text/html">
+{{each data item idx}}
+
+{{if idx==0}}
+<li class="first">
+    <a href="#"><img src="{{item.cover}}" alt=""></a>
+    <p>{{item.title}}</p>
+</li>
+{{else}}
+<li>
+    <a href="#"><img src="{{item.cover}}" alt=""></a>
+    <p>{{item.title}}</p>
+{{/if}}
+{{/each}}
 </script>
 <script>
 
@@ -237,6 +239,18 @@
             res.msg
         }
     })
+
+    //获取焦点图显示在index.html上显示
+    article.getFocusFive().then(function (res) {
+        console.log(res);
+        if (res.code == 200) {
+            var htmlStr = template("focusFive", res);
+            $("#focus").html(htmlStr);
+        } else {
+            res.msg
+        }
+
+    });
 </script>
 
 </html>

@@ -22,4 +22,10 @@ var article = {
         })
     },
 
+    getFocusFive: function () {
+        return $.get(APILIST.article_get, {
+            perpage: 5
+        })
+    }
+
 }
