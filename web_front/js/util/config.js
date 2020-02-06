@@ -21,4 +21,7 @@ var APILIST = {
     //获取排行榜
     rank_get: BASEURL + "/rank",
 
+    //获取最新资讯
+    zixun: BASEURL + "/lastest",
+
 }

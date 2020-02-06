@@ -21,16 +21,20 @@ var article = {
             'id': id
         })
     },
-
+    //焦点图
     getFocusFive: function () {
         return $.get(APILIST.article_get, {
             perpage: 5
         })
     },
 
-
+    // 排行榜
     getRank: function () {
         return $.get(APILIST.rank_get)
-    }
+    },
 
+    //最新资讯
+    getZixun: function () {
+        return $.get(APILIST.zixun)
+    }
 }
