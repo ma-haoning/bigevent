@@ -24,4 +24,8 @@ var APILIST = {
     //获取最新资讯
     zixun: BASEURL + "/lastest",
 
+    //获取list.html上的各个文章的内容
+    article_get: BASEURL + '/search',
+
+
 }

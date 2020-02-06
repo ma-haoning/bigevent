@@ -36,5 +36,13 @@ var article = {
     //最新资讯
     getZixun: function () {
         return $.get(APILIST.zixun)
+    },
+
+    //获取在list.html上的各个文章内容
+    getList: function (type, page) {
+        return $.get(APILIST.article_get, {
+            "type": type,
+            "page": page
+        })
     }
 }
