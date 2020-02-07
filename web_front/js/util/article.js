@@ -29,8 +29,10 @@ var article = {
     },
 
     // 排行榜
-    getRank: function () {
-        return $.get(APILIST.rank_get)
+    getRank: function (id) {
+        return $.get(APILIST.rank_get, {
+            "type": id
+        })
     },
 
     //最新资讯
