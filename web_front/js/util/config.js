@@ -27,5 +27,8 @@ var APILIST = {
     //获取list.html上的各个文章的内容
     article_get: BASEURL + '/search',
 
+    //获取文章的详情
+    article_detail: BASEURL + "/article",
+
 
 }

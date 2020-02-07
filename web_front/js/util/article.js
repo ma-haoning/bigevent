@@ -46,5 +46,12 @@ var article = {
             "type": type,
             "page": page
         })
+    },
+
+    //获取文章的详情
+    getDetail: function (id) {
+        return $.get(APILIST.article_detail, {
+            "id": id
+        })
     }
 }
