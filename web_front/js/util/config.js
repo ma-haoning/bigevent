@@ -30,5 +30,6 @@ var APILIST = {
     //获取文章的详情
     article_detail: BASEURL + "/article",
 
-
+    //添加评论
+    comment_add: BASEURL + "/post_comment"
 }

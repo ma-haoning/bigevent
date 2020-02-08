@@ -86,7 +86,7 @@
                     <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
                 </div>
                 <div class="form_group">
-                    <input type="submit" name="" value="评 论" class="comment_sub"></div>
+                    <input type="button" name="" value="评 论" class="comment_sub"></div>
             </form>
 
             <div class="comment_count">
@@ -207,6 +207,7 @@
 <script src="./js/util/config.js"></script>
 <script src="./js/util/category.js"></script>
 <script src="./js/util/article.js"></script>
+<script src="./js/util/comment.js"></script>
 
 
 </script>
@@ -215,49 +216,82 @@
 
     var id = window.location.search.substr(4);
     // console.log(id);
+    if (id) {
+        //获取文章的详情
+        article.getDetail(id).then(function (res) {
+            console.log(res);
+            //解构赋值
+            let { code, msg, data: {
+                author,
+                comment,
+                content,
+                date,
+                read,
+                title,
+                type_name,
+                type_id,
+            } } = res;
+            if (code == 200) {
+                // alert(1)
+                $("#title").text(title);
+                $("#content").html(content);
+                $("#type_name").text(type_name);
+                $("#commet").text(comment);
+                $("#date").text(date);
+                $("#read").text(read);
 
-    //获取文章的详情
-    article.getDetail(id).then(function (res) {
-        console.log(res);
-        //解构赋值
-        let { code, msg, data: {
-            author,
-            comment,
-            content,
-            date,
-            read,
-            title,
-            type_name,
-            type_id,
-        } } = res;
-        if (code == 200) {
-            // alert(1)
-            $("#title").text(title);
-            $("#content").html(content);
-            $("#type_name").text(type_name);
-            $("#commet").text(comment);
-            $("#date").text(date);
-            $("#read").text(read);
+                if (res.data.next) {
+                    $("#next").attr("href", "./article.html?id=" + res.data.next.id);
+                    $("#next").text(res.data.next.title);
+                } else {
+                    $("#next").text("无");
+                }
 
-            if (res.data.next) {
-                $("#next").attr("href", "./article.html?id=" + res.data.next.id);
-                $("#next").text(res.data.next.title);
+                if (res.data.prev) {
+                    $("#prev").attr("href", "./article.html?id=" + res.data.prev.id);
+                    $("#prev").text(res.data.prev.title);
+                } else {
+                    $("#prev").text("无");
+                }
+
             } else {
-                $("#next").text("无");
+                alert(msg)
             }
 
-            if (res.data.prev) {
-                $("#prev").attr("href", "./article.html?id=" + res.data.prev.id);
-                $("#prev").text(res.data.prev.title);
-            } else {
-                $("#prev").text("无");
+        })
+
+
+
+        //提交评论
+        //收集用户的信息
+        $(".comment_sub").click(function () {
+            //用户名
+            var name = $(".comment_name").val().trim();
+            //内容
+            var content = $(".comment_input").val().trim();
+            //判断是否为空
+            if (name.length == 0 || content.length == 0) {
+                alert("请输入用户名或内容");
+                return;
             }
 
-        } else {
-            alert(msg)
-        }
+            //发送请求
+            comment.add(name, content, id).then(function (res) {
+                console.log(res);
+                //对象解构赋值
+                let { code, msg } = res;
+                if (code == 200) {
+                    $(".comment_name").val("");
+                    $(".comment_input").val("");
+                } else {
+                    alert(msg);
+                }
 
-    })
+            })
+        })
+
+
+    }
 </script>
 
 
