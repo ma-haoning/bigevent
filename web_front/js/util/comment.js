@@ -6,4 +6,9 @@ const comment = {
             "article_id": article_id
         })
     },
+    get: function (id) {
+        return $.get(APILIST.comment_get, {
+            "article_id": id
+        })
+    }
 }

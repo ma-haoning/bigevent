@@ -31,5 +31,8 @@ var APILIST = {
     article_detail: BASEURL + "/article",
 
     //添加评论
-    comment_add: BASEURL + "/post_comment"
+    comment_add: BASEURL + "/post_comment",
+
+    //获取评论
+    comment_get: BASEURL + "/get_comments"
 }

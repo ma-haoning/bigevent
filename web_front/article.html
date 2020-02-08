@@ -93,35 +93,15 @@
                 4条评论
             </div>
 
-            <div class="comment_list_con">
+            <div class="comment_list_con" id="aaa">
                 <div class="comment_detail_list">
                     <div class="person_pic fl">乔</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
+                    <div class="name_time fl"><b class="xuzhu">虚竹</b><span class="sj">4小时前</span></div>
                     <div class="comment_text fl">
                         遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
                     </div>
                 </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">段</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">虚</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">王</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
+
             </div>
         </div>
         <div class="right_con setfl">
@@ -211,10 +191,22 @@
 
 
 </script>
+<!-- 获取评论的模板引擎 -->
+<script type="text/html" id="zuihou">
+{{each data item}}
+<div class="comment_detail_list">
+    <div class="person_pic fl">{{item.name.substr(0,1)}}</div>
+    <div class="name_time fl"><b class="xuzhu">{{item.name}}</b><span class="sj">{{item.dt}}</span></div>
+    <div class="comment_text fl">
+      {{item.content}}
+    </div>
+</div>
 
+{{/each}}
+</script>
 <script>
 
-    var id = window.location.search.substr(4);
+    const id = window.location.search.substr(4);
     // console.log(id);
     if (id) {
         //获取文章的详情
@@ -283,6 +275,9 @@
                 if (code == 200) {
                     $(".comment_name").val("");
                     $(".comment_input").val("");
+
+
+                    getComents(id);
                 } else {
                     alert(msg);
                 }
@@ -290,7 +285,21 @@
             })
         })
 
+        //获取评论
+        let getComents = (id) => {
+            return comment.get(id).then(function (res) {
+                console.log(res);
+                if (res.code == 200) {
+                    $(".comment_count").text(res.data.length + "个评论")
+                    var htmlStr = template("zuihou", res);
+                    $("#aaa").html(htmlStr);
+                } else {
+                    alert(res.msg)
+                }
+            })
+        }
 
+        getComents(id);
     }
 </script>
 
